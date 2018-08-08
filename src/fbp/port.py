@@ -5,23 +5,37 @@ import json
 
 # All Supported Types
 TYPES = dict()
-TYPES["Boolean"] = types.BooleanType
-TYPES["Int"] = types.IntType
-TYPES["Long"] = types.LongType
-TYPES["Float"] = types.FloatType
-TYPES["String"] = types.StringType
-TYPES["List"] = types.ListType
-TYPES["Json"] = types.DictType
+#TYPES["Boolean"] = types.BooleanType
+#TYPES["Int"] = types.IntType
+#TYPES["Long"] = types.LongType
+#TYPES["Float"] = types.FloatType
+#TYPES["String"] = types.StringType
+#TYPES["List"] = types.ListType
+#TYPES["Json"] = types.DictType
+TYPES["Boolean"] = bool()
+TYPES["Int"] = int()
+TYPES["Long"] = int()
+TYPES["Float"] = float()
+TYPES["String"] = str()
+TYPES["List"] = list()
+TYPES["Json"] = dict()
 
 
 def c_int(val):
-    return int(val)
+    #print("c_int")
+    #print("val",val)
+    if val is not None:
+      return int(val)
+    else:
+      return 0
 
 
 def c_bool(val):
-    if type(val) is 'bool':
+    #if type(val) is 'bool':
+    if type(val) is bool:
         return val
-    elif type(val) is str or unicode:
+    #elif type(val) is str or unicode:
+    elif type(val) is str:
         return str(val).lower() in ["y", "true", "yes"]
     else:
         return False
@@ -42,7 +56,8 @@ def c_str(val):
 def c_list(val):
     if type(val) is list:
         return val
-    elif type(val) is str or unicode:
+    #elif type(val) is str or unicode:
+    elif type(val) is str:
         return str(val).split(",")
     return []
 
@@ -50,12 +65,15 @@ def c_list(val):
 def c_json(val):
     if type(val) is dict:
         return val
-    elif type(val) is str or unicode:
+    #elif type(val) is str or unicode:
+    elif type(val) is str:
         return json.loads(str(val))
     return {}
 
 
 def type_conversion(value, type):
+    #print("type_conversion")
+    #print("type",type)
     if type == "Boolean":
         return c_bool(value)
     elif type == "Int":

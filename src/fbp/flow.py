@@ -3,7 +3,7 @@ from multiprocessing import Process, Manager
 from multiprocessing.managers import BaseManager
 import sys
 import json
-from node import Node
+from .node import Node
 
 
 EXEC_MODE_BATCH = "batch"
@@ -205,6 +205,7 @@ class Flow(object):
         pass
 
     def run(self, end_node):
+        #print(self._mode)
         if self._mode == EXEC_MODE_BATCH:
             BaseManager.register('FlowStates', FlowStates)
             BaseManager.register('Node', Node)

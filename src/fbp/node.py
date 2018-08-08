@@ -2,7 +2,7 @@
 
 import traceback, pdb
 
-from port import Inport, Outport
+from .port import Inport, Outport
 
 OUTPORT_DEFAULT_NAME = "out"
 
@@ -15,12 +15,15 @@ STATUS_RUNNING = "running"
 class Node(object):
 
     def __init__(self, id, name, spec):
+        #print("Node.__init__")
         self._id = id
         self._name = name
         self._spec = spec
         self._port_spec = spec.get("port")
+        #print(spec.get("func"))
         # Tricky and Non-Secure eval
-        exec(spec.get("func"))
+        exec(spec.get("func"), globals())
+        #print(func)
         self._func = func
 
         self._inputports = dict()
@@ -159,6 +162,7 @@ class Node(object):
         return node
 
     def run(self):
+        #print("node.run()")
         def _function_wrapper(func, args):
             return func(*args)
 
@@ -196,4 +200,5 @@ class Node(object):
         except Exception as e:
             self._status = STATUS_FAIL
             self._error = e
+            print(e)
             print(traceback.format_exc())
