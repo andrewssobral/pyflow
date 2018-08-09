@@ -182,15 +182,22 @@ class Node(object):
         
         try:
             return_value = _function_wrapper(self._func, parameter_values)
+            print("type return_value",type(return_value))
             #print("return_value",return_value)
             
             self._is_cache_valid = True
             self._status = STATUS_SUCCESS
             self._error = None
 
+            print("self._outputports", self._outputports)
+            print("len(self._outputports)", len(self._outputports))
+            
             # Single output case
-            if OUTPORT_DEFAULT_NAME in self._outputports.keys() and len(self._outputports) == 1:
-                out_port = self._outputports.get(OUTPORT_DEFAULT_NAME)
+            #if OUTPORT_DEFAULT_NAME in self._outputports.keys() and len(self._outputports) == 1:
+            if len(self._outputports) == 1:
+                #out_port = self._outputports.get(OUTPORT_DEFAULT_NAME)
+                OUTPORT_NAME = next(iter(self._outputports))
+                out_port = self._outputports.get(OUTPORT_NAME)
                 out_port.value = return_value
                 return
 

@@ -361,11 +361,13 @@ define(["model/flow", "util"], function(Flow, Util) {
 
             r.inputs.map(function(input){
                 var endpoint = instance.getEndpoint(r.id + "-" + input.name);
-                endpoint.setLabel("" + input.value)
+                //endpoint.setLabel("" + input.value)
+                endpoint.setLabel("" + input.name)
             })
             r.outputs.map(function(output){
                 var endpoint = instance.getEndpoint(r.id + "-" + output.name);
-                endpoint.setLabel("" + output.value)
+                //endpoint.setLabel("" + output.value)
+                endpoint.setLabel("" + output.name)
             })
         })
     };
