@@ -182,6 +182,7 @@ class Node(object):
         
         try:
             return_value = _function_wrapper(self._func, parameter_values)
+            #print("return_value",return_value)
             
             self._is_cache_valid = True
             self._status = STATUS_SUCCESS

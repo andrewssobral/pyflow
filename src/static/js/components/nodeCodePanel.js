@@ -89,11 +89,27 @@ define(["util", "model/flow"], function(Util, Flow) {
             var end_pos = func_declare_line.indexOf(")");
             var parameter = func_declare_line.substr(start_pos + 1, end_pos - start_pos - 1);
             parameters = parameter.split(",");
+            //console.log(parameters)
             this._currentNode.port().input = [];
 
             if (node.port().input.length == 0) {
                 for (i = 0; i < parameters.length; i++) {
-                    var port = { "name": parameters[i].trim(), "type": "String", "order": i };
+                    port_values = parameters[i].split("=");
+                    //console.log(port_values.length)
+                    port_name = ""
+                    port_default_value = ""
+                    if (port_values.length > 1){
+                        port_name = port_values[0].trim();
+                        port_default_value = port_values[1].trim();
+                    }
+                    else {
+                        port_name = parameters[i].trim();
+                    }
+                    var port = { 
+                      "name": port_name, 
+                      "type": "String", 
+                      "order": i, 
+                      "default": port_default_value};
                     node.port().input.push(port);
                 }
             } else {
