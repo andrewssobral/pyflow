@@ -41,10 +41,13 @@ define(["util", "model/flow"], function(Util, Flow) {
 
         this._editor = CodeMirror.fromTextArea(document.getElementById("NodeCodeEditor"), {
             lineNumbers: true,
-            indentUnit: 4,
+            indentUnit: 2,
             mode: "python",
-            theme: "icecoder"
+            theme: "default",
+            tabSize: 2,
+            indentWithTabs: false
         });
+        //theme: "icecoder"
 
         this._editor.on("change", function(cm, change) {
             var code = cm.getValue();
